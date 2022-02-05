@@ -1,0 +1,33 @@
+{
+    "TbCustomerApi": {
+        "label": {
+            "service": "Service",
+            "method": "Method",
+            "host": "Host",
+            "header": "Header",
+            "value": "Value",
+            "isQuery": "isQuery"
+        },
+        "status": {
+            "requesting": "requesting"
+        },
+        "parameters": {
+            "saveCustomerUsingPOST": "POST /api/customer",
+            "body": "body",
+            "getCustomerByIdUsingGET": "GET /api/customer/{customerId}",
+            "customerId": "customerId",
+            "deleteCustomerUsingDELETE": "DELETE /api/customer/{customerId}",
+            "getShortCustomerInfoByIdUsingGET": "GET /api/customer/{customerId}/shortInfo",
+            "getCustomerTitleByIdUsingGET": "GET /api/customer/{customerId}/title",
+            "getCustomersUsingGET": "GET /api/customers{?page,pageSize,sortOrder,sortProperty,textSearch}",
+            "pageSize": "pageSize",
+            "page": "page",
+            "textSearch": "textSearch",
+            "sortProperty": "sortProperty",
+            "sortOrder": "sortOrder",
+            "getTenantCustomerUsingGET": "GET /api/tenant/customers{?customerTitle}",
+            "customerTitle": "customerTitle",
+            "optionalParameters": "Options"
+        }
+    }
+}

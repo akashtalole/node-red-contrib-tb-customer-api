@@ -1,0 +1,426 @@
+<script type="text/javascript">
+    RED.nodes.registerType('tb-customer-api', {
+        category: 'function',
+        color: '#89bf04',
+        defaults: {
+            method: { value: "", required: true },
+            saveCustomerUsingPOST_body: { value: "" },
+            saveCustomerUsingPOST_bodyType: { value: "str" },
+            getCustomerByIdUsingGET_customerId: { value: "" },
+            getCustomerByIdUsingGET_customerIdType: { value: "str" },
+            deleteCustomerUsingDELETE_customerId: { value: "" },
+            deleteCustomerUsingDELETE_customerIdType: { value: "str" },
+            getShortCustomerInfoByIdUsingGET_customerId: { value: "" },
+            getShortCustomerInfoByIdUsingGET_customerIdType: { value: "str" },
+            getCustomerTitleByIdUsingGET_customerId: { value: "" },
+            getCustomerTitleByIdUsingGET_customerIdType: { value: "str" },
+            getCustomersUsingGET_pageSize: { value: "" },
+            getCustomersUsingGET_pageSizeType: { value: "str" },
+            getCustomersUsingGET_page: { value: "" },
+            getCustomersUsingGET_pageType: { value: "str" },
+            getCustomersUsingGET_textSearch: { value: "" },
+            getCustomersUsingGET_textSearchType: { value: "str" },
+            getCustomersUsingGET_sortProperty: { value: "" },
+            getCustomersUsingGET_sortPropertyType: { value: "str" },
+            getCustomersUsingGET_sortOrder: { value: "" },
+            getCustomersUsingGET_sortOrderType: { value: "str" },
+            getTenantCustomerUsingGET_customerTitle: { value: "" },
+            getTenantCustomerUsingGET_customerTitleType: { value: "str" },
+            name: { value: "" }
+        },
+        inputs: 1,
+        outputs: 1,
+        icon: 'icon.png',
+        label: function () {
+            return this.name || this.method || "tb-customer-api";
+        },
+        labelStyle: function() {
+            return this.name?"node_label_italic":"";
+        },
+        oneditprepare: function () {
+            var selectedMethod = $('#node-input-method option:selected');
+            if (!selectedMethod.val()) {
+                var methods = $('#node-input-method').children();
+                var firstMethod = methods.first();
+                $('#node-input-method').val(firstMethod.val());
+            }
+
+            var showParameters = function () {
+
+                $("#node-input-saveCustomerUsingPOST_body").typedInput({
+                    default: 'str',
+                    typeField: $("#node-input-saveCustomerUsingPOST_bodyType"),
+                    types: ['str', 'msg']
+                });
+
+                $("#saveCustomerUsingPOST_body").hide();
+
+                $("#node-input-getCustomerByIdUsingGET_customerId").typedInput({
+                    default: 'str',
+                    typeField: $("#node-input-getCustomerByIdUsingGET_customerIdType"),
+                    types: ['str', 'msg']
+                });
+
+                $("#getCustomerByIdUsingGET_customerId").hide();
+
+                $("#node-input-deleteCustomerUsingDELETE_customerId").typedInput({
+                    default: 'str',
+                    typeField: $("#node-input-deleteCustomerUsingDELETE_customerIdType"),
+                    types: ['str', 'msg']
+                });
+
+                $("#deleteCustomerUsingDELETE_customerId").hide();
+
+                $("#node-input-getShortCustomerInfoByIdUsingGET_customerId").typedInput({
+                    default: 'str',
+                    typeField: $("#node-input-getShortCustomerInfoByIdUsingGET_customerIdType"),
+                    types: ['str', 'msg']
+                });
+
+                $("#getShortCustomerInfoByIdUsingGET_customerId").hide();
+
+                $("#node-input-getCustomerTitleByIdUsingGET_customerId").typedInput({
+                    default: 'str',
+                    typeField: $("#node-input-getCustomerTitleByIdUsingGET_customerIdType"),
+                    types: ['str', 'msg']
+                });
+
+                $("#getCustomerTitleByIdUsingGET_customerId").hide();
+
+                $("#node-input-getCustomersUsingGET_pageSize").typedInput({
+                    default: 'str',
+                    typeField: $("#node-input-getCustomersUsingGET_pageSizeType"),
+                    types: ['str', 'msg']
+                });
+
+                $("#getCustomersUsingGET_pageSize").hide();
+
+                $("#node-input-getCustomersUsingGET_page").typedInput({
+                    default: 'str',
+                    typeField: $("#node-input-getCustomersUsingGET_pageType"),
+                    types: ['str', 'msg']
+                });
+
+                $("#getCustomersUsingGET_page").hide();
+
+                $("#node-input-getCustomersUsingGET_textSearch").typedInput({
+                    default: 'str',
+                    typeField: $("#node-input-getCustomersUsingGET_textSearchType"),
+                    types: ['str', 'msg']
+                });
+
+                $("#getCustomersUsingGET_textSearch").hide();
+
+
+                $("#getCustomersUsingGET_sortProperty").hide();
+
+
+                $("#getCustomersUsingGET_sortOrder").hide();
+
+                $("#node-input-getTenantCustomerUsingGET_customerTitle").typedInput({
+                    default: 'str',
+                    typeField: $("#node-input-getTenantCustomerUsingGET_customerTitleType"),
+                    types: ['str', 'msg']
+                });
+
+                $("#getTenantCustomerUsingGET_customerTitle").hide();
+
+                $("#optional-parameters").hide();
+                $("#optional-parameters-label").hide();
+                if ($("#node-input-method").val() === 'saveCustomerUsingPOST') {
+
+                }
+                if ($("#node-input-method").val() === 'getCustomerByIdUsingGET') {
+
+                }
+                if ($("#node-input-method").val() === 'deleteCustomerUsingDELETE') {
+
+                }
+                if ($("#node-input-method").val() === 'getShortCustomerInfoByIdUsingGET') {
+
+                }
+                if ($("#node-input-method").val() === 'getCustomerTitleByIdUsingGET') {
+
+                }
+                if ($("#node-input-method").val() === 'getCustomersUsingGET') {
+
+                    $("#optional-parameters").show();
+                    $("#optional-parameters-label").show();
+                    
+                }
+                if ($("#node-input-method").val() === 'getTenantCustomerUsingGET') {
+
+                }
+
+                if ($("#optional-parameters").prop('checked')) {
+                    if ($("#node-input-method").val() === 'saveCustomerUsingPOST') {
+
+                    }
+                    if ($("#node-input-method").val() === 'getCustomerByIdUsingGET') {
+
+                        $("#getCustomerByIdUsingGET_customerId").show();
+                        
+                    }
+                    if ($("#node-input-method").val() === 'deleteCustomerUsingDELETE') {
+
+                        $("#deleteCustomerUsingDELETE_customerId").show();
+                        
+                    }
+                    if ($("#node-input-method").val() === 'getShortCustomerInfoByIdUsingGET') {
+
+                        $("#getShortCustomerInfoByIdUsingGET_customerId").show();
+                        
+                    }
+                    if ($("#node-input-method").val() === 'getCustomerTitleByIdUsingGET') {
+
+                        $("#getCustomerTitleByIdUsingGET_customerId").show();
+                        
+                    }
+                    if ($("#node-input-method").val() === 'getCustomersUsingGET') {
+
+                        $("#getCustomersUsingGET_pageSize").show();
+                        
+                        $("#getCustomersUsingGET_page").show();
+                        
+                        $("#getCustomersUsingGET_textSearch").show();
+                        
+                        $("#getCustomersUsingGET_sortProperty").show();
+                        
+                        $("#getCustomersUsingGET_sortOrder").show();
+                        
+                    }
+                    if ($("#node-input-method").val() === 'getTenantCustomerUsingGET') {
+
+                        $("#getTenantCustomerUsingGET_customerTitle").show();
+                        
+                    }
+                } else {
+                    if ($("#node-input-method").val() === 'saveCustomerUsingPOST') {
+
+                    }
+                    if ($("#node-input-method").val() === 'getCustomerByIdUsingGET') {
+
+                        $("#getCustomerByIdUsingGET_customerId").show();
+                        
+                    }
+                    if ($("#node-input-method").val() === 'deleteCustomerUsingDELETE') {
+
+                        $("#deleteCustomerUsingDELETE_customerId").show();
+                        
+                    }
+                    if ($("#node-input-method").val() === 'getShortCustomerInfoByIdUsingGET') {
+
+                        $("#getShortCustomerInfoByIdUsingGET_customerId").show();
+                        
+                    }
+                    if ($("#node-input-method").val() === 'getCustomerTitleByIdUsingGET') {
+
+                        $("#getCustomerTitleByIdUsingGET_customerId").show();
+                        
+                    }
+                    if ($("#node-input-method").val() === 'getCustomersUsingGET') {
+
+                        $("#getCustomersUsingGET_pageSize").show();
+                        
+                        $("#getCustomersUsingGET_page").show();
+                        
+                    }
+                    if ($("#node-input-method").val() === 'getTenantCustomerUsingGET') {
+
+                        $("#getTenantCustomerUsingGET_customerTitle").show();
+                        
+                    }
+                }
+            };
+
+            $("#node-input-method").change(function () {
+                showParameters();
+            });
+
+            $("#optional-parameters").change(function () {
+                showParameters();
+            });
+
+            var selected_getCustomersUsingGET_sortProperty = $('#node-input-getCustomersUsingGET_sortProperty option:selected');
+            if (!selected_getCustomersUsingGET_sortProperty.val()) {
+                var children_getCustomersUsingGET_sortProperty = $('#node-input-getCustomersUsingGET_sortProperty').children();
+                var first_getCustomersUsingGET_sortProperty = children_getCustomersUsingGET_sortProperty.first();
+                $('#node-input-getCustomersUsingGET_sortProperty').val(first_getCustomersUsingGET_sortProperty.val());
+            }
+            var selected_getCustomersUsingGET_sortOrder = $('#node-input-getCustomersUsingGET_sortOrder option:selected');
+            if (!selected_getCustomersUsingGET_sortOrder.val()) {
+                var children_getCustomersUsingGET_sortOrder = $('#node-input-getCustomersUsingGET_sortOrder').children();
+                var first_getCustomersUsingGET_sortOrder = children_getCustomersUsingGET_sortOrder.first();
+                $('#node-input-getCustomersUsingGET_sortOrder').val(first_getCustomersUsingGET_sortOrder.val());
+            }
+        }
+    });
+</script>
+
+<script type="text/html" data-template-name="tb-customer-api">
+
+    <div class="form-row">
+        <label for="node-input-method"><i class="fa fa-tasks"></i> <span data-i18n="TbCustomerApi.label.method"></span></label>
+        <select id="node-input-method">
+            <option value="saveCustomerUsingPOST" data-i18n="TbCustomerApi.parameters.saveCustomerUsingPOST"></option>
+            <option value="getCustomerByIdUsingGET" data-i18n="TbCustomerApi.parameters.getCustomerByIdUsingGET"></option>
+            <option value="deleteCustomerUsingDELETE" data-i18n="TbCustomerApi.parameters.deleteCustomerUsingDELETE"></option>
+            <option value="getShortCustomerInfoByIdUsingGET" data-i18n="TbCustomerApi.parameters.getShortCustomerInfoByIdUsingGET"></option>
+            <option value="getCustomerTitleByIdUsingGET" data-i18n="TbCustomerApi.parameters.getCustomerTitleByIdUsingGET"></option>
+            <option value="getCustomersUsingGET" data-i18n="TbCustomerApi.parameters.getCustomersUsingGET"></option>
+            <option value="getTenantCustomerUsingGET" data-i18n="TbCustomerApi.parameters.getTenantCustomerUsingGET"></option>
+        </select>
+        &nbsp;
+        <input type="checkbox" id="optional-parameters" style="margin-left: 10px; vertical-align: text-bottom; width: auto;">
+        <label for="optional-parameters" id="optional-parameters-label" style="width: auto;"> <span data-i18n="TbCustomerApi.parameters.optionalParameters"></span></label>
+    </div>
+
+    <div class="form-row" id="saveCustomerUsingPOST_body">
+        <label for="node-input-saveCustomerUsingPOST_body"><i class="fa fa-list"></i> <span data-i18n="TbCustomerApi.parameters.body"></span></label>
+
+        <input type="text" id="node-input-saveCustomerUsingPOST_body" placeholder="" style="width:70%">
+        <input type="hidden" id="node-input-saveCustomerUsingPOST_bodyType">
+    </div>
+
+    <div class="form-row" id="getCustomerByIdUsingGET_customerId">
+        <label for="node-input-getCustomerByIdUsingGET_customerId"><i class="fa fa-list"></i> <span data-i18n="TbCustomerApi.parameters.customerId"></span></label>
+
+        <input type="text" id="node-input-getCustomerByIdUsingGET_customerId" placeholder="A string value representing the customer id. For example, '784f394c-42b6-435a-983c-b7beff2784f9'" style="width:70%">
+        <input type="hidden" id="node-input-getCustomerByIdUsingGET_customerIdType">
+    </div>
+
+    <div class="form-row" id="deleteCustomerUsingDELETE_customerId">
+        <label for="node-input-deleteCustomerUsingDELETE_customerId"><i class="fa fa-list"></i> <span data-i18n="TbCustomerApi.parameters.customerId"></span></label>
+
+        <input type="text" id="node-input-deleteCustomerUsingDELETE_customerId" placeholder="A string value representing the customer id. For example, '784f394c-42b6-435a-983c-b7beff2784f9'" style="width:70%">
+        <input type="hidden" id="node-input-deleteCustomerUsingDELETE_customerIdType">
+    </div>
+
+    <div class="form-row" id="getShortCustomerInfoByIdUsingGET_customerId">
+        <label for="node-input-getShortCustomerInfoByIdUsingGET_customerId"><i class="fa fa-list"></i> <span data-i18n="TbCustomerApi.parameters.customerId"></span></label>
+
+        <input type="text" id="node-input-getShortCustomerInfoByIdUsingGET_customerId" placeholder="A string value representing the customer id. For example, '784f394c-42b6-435a-983c-b7beff2784f9'" style="width:70%">
+        <input type="hidden" id="node-input-getShortCustomerInfoByIdUsingGET_customerIdType">
+    </div>
+
+    <div class="form-row" id="getCustomerTitleByIdUsingGET_customerId">
+        <label for="node-input-getCustomerTitleByIdUsingGET_customerId"><i class="fa fa-list"></i> <span data-i18n="TbCustomerApi.parameters.customerId"></span></label>
+
+        <input type="text" id="node-input-getCustomerTitleByIdUsingGET_customerId" placeholder="A string value representing the customer id. For example, '784f394c-42b6-435a-983c-b7beff2784f9'" style="width:70%">
+        <input type="hidden" id="node-input-getCustomerTitleByIdUsingGET_customerIdType">
+    </div>
+
+    <div class="form-row" id="getCustomersUsingGET_pageSize">
+        <label for="node-input-getCustomersUsingGET_pageSize"><i class="fa fa-list"></i> <span data-i18n="TbCustomerApi.parameters.pageSize"></span></label>
+
+        <input type="text" id="node-input-getCustomersUsingGET_pageSize" placeholder="Maximum amount of entities in a one page" style="width:70%">
+        <input type="hidden" id="node-input-getCustomersUsingGET_pageSizeType">
+    </div>
+
+    <div class="form-row" id="getCustomersUsingGET_page">
+        <label for="node-input-getCustomersUsingGET_page"><i class="fa fa-list"></i> <span data-i18n="TbCustomerApi.parameters.page"></span></label>
+
+        <input type="text" id="node-input-getCustomersUsingGET_page" placeholder="Sequence number of page starting from 0" style="width:70%">
+        <input type="hidden" id="node-input-getCustomersUsingGET_pageType">
+    </div>
+
+    <div class="form-row" id="getCustomersUsingGET_textSearch">
+        <label for="node-input-getCustomersUsingGET_textSearch"><i class="fa fa-list"></i> <span data-i18n="TbCustomerApi.parameters.textSearch"></span></label>
+
+        <input type="text" id="node-input-getCustomersUsingGET_textSearch" placeholder="The case insensitive 'substring' filter based on the customer title." style="width:70%">
+        <input type="hidden" id="node-input-getCustomersUsingGET_textSearchType">
+    </div>
+
+    <div class="form-row" id="getCustomersUsingGET_sortProperty">
+        <label for="node-input-getCustomersUsingGET_sortProperty"><i class="fa fa-list"></i> <span data-i18n="TbCustomerApi.parameters.sortProperty"></span></label>
+        <select id="node-input-getCustomersUsingGET_sortProperty">
+            <option value="city">city</option>
+            <option value="country">country</option>
+            <option value="createdTime">createdTime</option>
+            <option value="email">email</option>
+            <option value="title">title</option>
+        </select>
+
+    </div>
+
+    <div class="form-row" id="getCustomersUsingGET_sortOrder">
+        <label for="node-input-getCustomersUsingGET_sortOrder"><i class="fa fa-list"></i> <span data-i18n="TbCustomerApi.parameters.sortOrder"></span></label>
+        <select id="node-input-getCustomersUsingGET_sortOrder">
+            <option value="ASC">ASC</option>
+            <option value="DESC">DESC</option>
+        </select>
+
+    </div>
+
+    <div class="form-row" id="getTenantCustomerUsingGET_customerTitle">
+        <label for="node-input-getTenantCustomerUsingGET_customerTitle"><i class="fa fa-list"></i> <span data-i18n="TbCustomerApi.parameters.customerTitle"></span></label>
+
+        <input type="text" id="node-input-getTenantCustomerUsingGET_customerTitle" placeholder="A string value representing the Customer title." style="width:70%">
+        <input type="hidden" id="node-input-getTenantCustomerUsingGET_customerTitleType">
+    </div>
+
+    <hr/>
+    <div class="form-row">
+        <label for="node-input-name"><i class="fa fa-tag"></i> <span data-i18n="node-red:common.label.name"></span></label>
+        <input type="text" id="node-input-name" data-i18n="[placeholder]node-red:common.label.name">
+    </div>
+</script>
+
+<script type="text/html" data-help-name="tb-customer-api">
+
+    <p> ThingsBoard open-source IoT platform REST API documentation.</p>
+    <p><b>Methods</b></p>
+        <h3>POST /api/customer</h3>
+        <p>Creates or Updates the Customer. When creating customer, platform generates Customer Id as [time-based UUID](https://en.wikipedia.org/wiki/Universally_unique_identifier#Version_1_(date-time_and_MAC_address)). The newly created Customer Id will be present in the response. Specify existing Customer Id to update the Customer. Referencing non-existing Customer Id will cause 'Not Found' error.
+
+Available for users with 'TENANT_ADMIN' authority.</p>
+        <dl class="message-properties">
+        <dt>body <span class="property-type"></span></dt>
+        </dl>
+        <h3>GET /api/customer/{customerId}</h3>
+        <p>Get the Customer object based on the provided Customer Id. If the user has the authority of 'Tenant Administrator', the server checks that the customer is owned by the same tenant. If the user has the authority of 'Customer User', the server checks that the user belongs to the customer.
+
+Available for users with 'TENANT_ADMIN' or 'CUSTOMER_USER' authority.</p>
+        <dl class="message-properties">
+        <dt>customerId <span class="property-type">string</span></dt>
+        </dl>
+        <h3>DELETE /api/customer/{customerId}</h3>
+        <p>Deletes the Customer and all customer Users. All assigned Dashboards, Assets, Devices, etc. will be unassigned but not deleted. Referencing non-existing Customer Id will cause an error.
+
+Available for users with 'TENANT_ADMIN' authority.</p>
+        <dl class="message-properties">
+        <dt>customerId <span class="property-type">string</span></dt>
+        </dl>
+        <h3>GET /api/customer/{customerId}/shortInfo</h3>
+        <p>Get the short customer object that contains only the title and 'isPublic' flag. If the user has the authority of 'Tenant Administrator', the server checks that the customer is owned by the same tenant. If the user has the authority of 'Customer User', the server checks that the user belongs to the customer.
+
+Available for users with 'TENANT_ADMIN' or 'CUSTOMER_USER' authority.</p>
+        <dl class="message-properties">
+        <dt>customerId <span class="property-type">string</span></dt>
+        </dl>
+        <h3>GET /api/customer/{customerId}/title</h3>
+        <p>Get the title of the customer. If the user has the authority of 'Tenant Administrator', the server checks that the customer is owned by the same tenant. If the user has the authority of 'Customer User', the server checks that the user belongs to the customer.
+
+Available for users with 'TENANT_ADMIN' or 'CUSTOMER_USER' authority.</p>
+        <dl class="message-properties">
+        <dt>customerId <span class="property-type">string</span></dt>
+        </dl>
+        <h3>GET /api/customers{?page,pageSize,sortOrder,sortProperty,textSearch}</h3>
+        <p>Returns a page of customers owned by tenant. You can specify parameters to filter the results. The result is wrapped with PageData object that allows you to iterate over result set using pagination. See the 'Model' tab of the Response Class for more details. 
+
+Available for users with 'TENANT_ADMIN' authority.</p>
+        <dl class="message-properties">
+        <dt>pageSize <span class="property-type">integer</span></dt>
+        <dt>page <span class="property-type">integer</span></dt>
+        <dt>textSearch <span class="property-type">string</span></dt>
+        <dt>sortProperty <span class="property-type">string</span></dt>
+        <dt>sortOrder <span class="property-type">string</span></dt>
+        </dl>
+        <h3>GET /api/tenant/customers{?customerTitle}</h3>
+        <p>Get the Customer using Customer Title. 
+
+Available for users with 'TENANT_ADMIN' authority.</p>
+        <dl class="message-properties">
+        <dt>customerTitle <span class="property-type">string</span></dt>
+        </dl>
+</script>

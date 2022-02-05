@@ -1,0 +1,33 @@
+{
+    "TbCustomerApi": {
+        "label": {
+            "service": "服务",
+            "method": "方法",
+            "host": "网络主机",
+            "header": "字头段",
+            "value": "值",
+            "isQuery": "查询"
+        },
+        "status": {
+            "requesting": "请求中"
+        },
+        "parameters": {
+            "saveCustomerUsingPOST": "POST /api/customer",
+            "body": "body",
+            "getCustomerByIdUsingGET": "GET /api/customer/{customerId}",
+            "customerId": "customerId",
+            "deleteCustomerUsingDELETE": "DELETE /api/customer/{customerId}",
+            "getShortCustomerInfoByIdUsingGET": "GET /api/customer/{customerId}/shortInfo",
+            "getCustomerTitleByIdUsingGET": "GET /api/customer/{customerId}/title",
+            "getCustomersUsingGET": "GET /api/customers{?page,pageSize,sortOrder,sortProperty,textSearch}",
+            "pageSize": "pageSize",
+            "page": "page",
+            "textSearch": "textSearch",
+            "sortProperty": "sortProperty",
+            "sortOrder": "sortOrder",
+            "getTenantCustomerUsingGET": "GET /api/tenant/customers{?customerTitle}",
+            "customerTitle": "customerTitle",
+            "optionalParameters": "可选项"
+        }
+    }
+}
